@@ -1,0 +1,40 @@
+{
+  "required": true,
+  "package": "electrolyte.greate.mixin",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_16",
+  "mixins": [
+    "MixinAllArmInteractionPointTypes$BeltType",
+    "MixinAssemblyOperatorBlockItem",
+    "MixinBasinBlockEntity",
+    "MixinBasinRenderer",
+    "MixinBeltBlock",
+    "MixinBeltBlockEntityAccessor",
+    "MixinBeltFunnelBlock",
+    "MixinBeltTunnelBlock",
+    "MixinBlockEntityBehaviour",
+    "MixinBlockStressDefaults",
+    "MixinCrushingWheelControllerBlockEntity",
+    "MixinDeployerBlockEntity",
+    "MixinFluidPropagator",
+    "MixinGirderBlock",
+    "MixinGirderEncasedShaftBlock",
+    "MixinKineticBlockEntity",
+    "MixinKineticNetwork",
+    "MixinPumpFluidTransferBehaviour",
+    "MixinRecipeManager",
+    "MixinSawBlockEntity",
+    "MixinSawBlockEntityAccessor",
+    "MixinSequencedAssemblyCategory",
+    "MixinSequencedAssemblyRecipe",
+    "MixinSteamEngineBlock",
+    "MixinSteamEngineBlock$PlacementHelper"
+  ],
+  "client": [
+    "MixinDeployerApplicationRecipe"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "greate-refmap.json"
+}
