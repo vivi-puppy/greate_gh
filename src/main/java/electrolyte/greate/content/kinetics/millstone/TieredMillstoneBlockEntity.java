@@ -43,32 +43,35 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     public void tick() {
         super.tick();
 
-        if(getSpeed() == 0) return;
+        if (getSpeed() == 0)
+            return;
 
-        for(int i = 0; i < outputInv.getSlots(); i++) {
-            if(outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i)) return;
+        for (int i = 0; i < outputInv.getSlots(); i++) {
+            if (outputInv.getStackInSlot(i).getCount() == outputInv.getSlotLimit(i))
+                return;
         }
 
-        if(timer > 0) {
+        if (timer > 0) {
             timer -= getProcessingSpeed();
 
-            if(level.isClientSide) {
+            if (level.isClientSide) {
                 spawnParticles();
                 return;
             }
 
-            if(timer <= 0) {
+            if (timer <= 0) {
                 process();
             }
             return;
         }
 
-        if(inputInv.getStackInSlot(0).isEmpty()) return;
+        if (inputInv.getStackInSlot(0).isEmpty())
+            return;
 
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
-        if(lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
+        if (lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
             Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
-            if(recipe.isEmpty()) {
+            if (recipe.isEmpty()) {
                 timer = 100;
                 sendData();
             } else {
@@ -83,13 +86,15 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
     }
 
     private void process() {
-        if(inputInv.getStackInSlot(0).isEmpty()) return;
+        if (inputInv.getStackInSlot(0).isEmpty())
+            return;
         RecipeWrapper inventoryIn = new RecipeWrapper(inputInv);
 
-        if(lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
+        if (lastRecipe == null || !TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) {
             Optional<Recipe<?>> recipe = findRecipe(inventoryIn);
 
-            if(recipe.isEmpty()) return;
+            if (recipe.isEmpty())
+                return;
             lastRecipe = recipe.get();
         }
 
@@ -122,13 +127,16 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
         tester.setStackInSlot(0, stack);
         RecipeWrapper inventoryIn = new RecipeWrapper(tester);
 
-        if(lastRecipe != null && TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn)) return true;
+        if (lastRecipe != null && TieredRecipeHelper.INSTANCE.firstIngredientMatches(lastRecipe, inventoryIn))
+            return true;
         return findRecipe(inventoryIn).isPresent();
     }
 
     private Optional<Recipe<?>> findRecipe(RecipeWrapper wrapper) {
         return TieredRecipeFinder.findRecipe(MILLING_RECIPE_CACHE_KEY, level, wrapper,
-                RecipeConditions.isOfType(GTRecipeTypes.MACERATOR_RECIPES, ModRecipeTypes.MILLING.getType(), AllRecipeTypes.MILLING.getType())
+                RecipeConditions
+                        .isOfType(GTRecipeTypes.MACERATOR_RECIPES, ModRecipeTypes.MILLING.getType(),
+                                AllRecipeTypes.MILLING.getType())
                         .and(TieredRecipeConditions.firstIngredientMatches(wrapper.getItem(0))),
                 TieredRecipeConditions.isEqualOrAboveTier(tier));
     }
@@ -147,20 +155,24 @@ public class TieredMillstoneBlockEntity extends MillstoneBlockEntity implements 
 
         @Override
         public boolean isItemValid(int slot, ItemStack stack) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return false;
+            if (outputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+                return false;
             return canProcess(stack) && super.isItemValid(slot, stack);
         }
 
         @Override
         public ItemStack insertItem(int slot, ItemStack stack, boolean simulate) {
-            if(outputInv == getHandlerFromIndex(getIndexForSlot(slot))) return stack;
-            if(!isItemValid(slot, stack)) return stack;
+            if (outputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+                return stack;
+            if (!isItemValid(slot, stack))
+                return stack;
             return super.insertItem(slot, stack, simulate);
         }
 
         @Override
         public ItemStack extractItem(int slot, int amount, boolean simulate) {
-            if(inputInv == getHandlerFromIndex(getIndexForSlot(slot))) return ItemStack.EMPTY;
+            if (inputInv == getHandlerFromIndex(getIndexForSlot(slot)))
+                return ItemStack.EMPTY;
             return super.extractItem(slot, amount, simulate);
         }
     }
